@@ -1,6 +1,10 @@
 package com.igormenin.banco.app;
 
 import com.igormenin.banco.modelo.*;
+import com.igormenin.banco.modelo.atm.CaixaEletronico;
+import com.igormenin.banco.modelo.pagamento.Boleto;
+import com.igormenin.banco.modelo.pagamento.DocumentoPagavel;
+import com.igormenin.banco.modelo.pagamento.Holerite;
 
 public class Principal {
 
@@ -12,7 +16,7 @@ public class Principal {
 
         System.out.println("Titular: " + minhaConta.getTitular().getNome());
         System.out.println("Saldo: " + minhaConta.getSaldo());
-        minhaConta.depositar(700);
+        minhaConta.depositar(57000);
         System.out.println("Saldo: " + minhaConta.getSaldo());
         minhaConta.sacar(400, 10);
         System.out.println("Saldo: " + minhaConta.getSaldo());
@@ -35,6 +39,29 @@ public class Principal {
 
         System.out.println();
 
+        Boleto boletoEscola = new Boleto(new Pessoa(1,"Isadora Menin","CPF"),200);
+        System.out.println("Boleto pago: " + boletoEscola.estaPago());
+        caixaEletronico.pagar(boletoEscola,minhaConta);
+        System.out.println("Boleto pago: " + boletoEscola.estaPago() + " Valor: " + boletoEscola.getValorTotal());
+        System.out.println("Saldo: " + minhaConta.getSaldo());
+        System.out.println("Boleto Estornado: " + boletoEscola.estaEstornado());
+        System.out.println("######################");
+        System.out.println("# Estornando boleto! #");
+        System.out.println("######################");
+        caixaEletronico.estornar(boletoEscola, minhaConta);
+        System.out.println("Boleto Estornado: " + boletoEscola.estaEstornado());
+        System.out.println("Saldo: " + minhaConta.getSaldo());
+
+        System.out.println();
+
+        Holerite holeriteFuncionario = new Holerite(new Pessoa(1,"Isadora Menin","CPF"),35,280);
+        System.out.println("Esta pago:" + holeriteFuncionario.estaPago());
+        caixaEletronico.pagar(holeriteFuncionario,minhaConta);
+        System.out.println("Esta pago:" + holeriteFuncionario.estaPago() + " Valor: " + +holeriteFuncionario.getValorTotal());
+
+
+
+        System.out.println();
         caixaEletronico.imprimirSaldo(minhaConta);
         System.out.println();
         caixaEletronico.imprimirSaldo(novaConta);
