@@ -2,14 +2,16 @@ package com.igormenin.banco.modelo.pagamento;
 
 import com.igormenin.banco.modelo.Pessoa;
 
+import java.math.BigDecimal;
+
 public class Holerite implements DocumentoPagavel{
 
     private Pessoa funcionario;
-    private double valorHora;
+    private BigDecimal valorHora;
     private int qtdeHoras;
     private boolean pago;
 
-    public Holerite(Pessoa funcionario, double valorHora, int qtdeHoras) {
+    public Holerite(Pessoa funcionario, BigDecimal valorHora, int qtdeHoras) {
         this.funcionario = funcionario;
         this.valorHora = valorHora;
         this.qtdeHoras = qtdeHoras;
@@ -17,8 +19,8 @@ public class Holerite implements DocumentoPagavel{
 
 
     @Override
-    public double getValorTotal() {
-        return valorHora * qtdeHoras;
+    public BigDecimal getValorTotal() {
+        return valorHora.multiply(new BigDecimal(qtdeHoras));
     }
 
     @Override

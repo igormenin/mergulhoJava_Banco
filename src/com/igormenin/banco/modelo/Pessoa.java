@@ -1,9 +1,13 @@
 package com.igormenin.banco.modelo;
 
+import java.time.LocalDateTime;
+
 public class Pessoa {
     private int id;
     private String nome;
     private String documento;
+    private TipoPessoa tipo = TipoPessoa.FISICA;
+    private LocalDateTime ultimaAtualizacao = LocalDateTime.now();
 
     Pessoa() {
 
@@ -39,6 +43,19 @@ public class Pessoa {
         return documento;
     }
 
+    public TipoPessoa getTipo() {
+        return tipo;
+    }
 
+    public void setTipo(TipoPessoa tipo) {
+        this.tipo = tipo;
+    }
 
+    public LocalDateTime getUltimaAtualizacao() {
+        return ultimaAtualizacao;
+    }
+
+    public void setUltimaAtualizacao() {
+        this.ultimaAtualizacao = LocalDateTime.now();
+    }
 }

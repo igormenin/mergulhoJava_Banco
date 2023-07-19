@@ -6,9 +6,9 @@ import com.igormenin.banco.modelo.exceptions.DocumentoExceptions;
 import com.igormenin.banco.modelo.exceptions.SaldoInsuficienteException;
 import com.igormenin.banco.modelo.exceptions.ValorNegativoException;
 import com.igormenin.banco.modelo.pagamento.Boleto;
-import com.igormenin.banco.modelo.pagamento.DocumentoPagavel;
 import com.igormenin.banco.modelo.pagamento.Holerite;
-import com.sun.source.tree.TryTree;
+
+import java.math.BigDecimal;
 
 public class Principal {
 
@@ -16,28 +16,32 @@ public class Principal {
 
         CaixaEletronico caixaEletronico = new CaixaEletronico();
 
-        ContaInvestimento minhaConta = new ContaInvestimento(new Pessoa(1,"Igor Cassiano Menin","RG"),null,1748,34488,0);
-
+        ContaInvestimento minhaConta = new ContaInvestimento(new Pessoa(1,"Igor Cassiano Menin","RG"),null,1748,34488,BigDecimal.ZERO);
+        System.out.println("DtHr Atualizacao: " + minhaConta.getTitular().getUltimaAtualizacao());
+        minhaConta.getTitular().setTipo(TipoPessoa.JURIDICA);
+        minhaConta.getTitular().setUltimaAtualizacao();
+        System.out.println("DtHr Atualizacao: " + minhaConta.getTitular().getUltimaAtualizacao());
         System.out.println("Titular: " + minhaConta.getTitular().getNome());
+        System.out.println("Tipo: " + minhaConta.getTitular().getTipo());
         System.out.println("Saldo: " + minhaConta.getSaldo());
-        minhaConta.depositar(57000);
+        minhaConta.depositar(new BigDecimal("57000"));
+        System.out.println("Saldo: " + minhaConta.getSaldoDisponivel());
+        minhaConta.sacar(new BigDecimal("400"), new BigDecimal("10"));
         System.out.println("Saldo: " + minhaConta.getSaldo());
-        minhaConta.sacar(400, 10);
-        System.out.println("Saldo: " + minhaConta.getSaldo());
-        minhaConta.creditarRendimentos(0.8);
+        minhaConta.creditarRendimentos(new BigDecimal("0.8"));
         System.out.println("Saldo: " + minhaConta.getSaldo());
         minhaConta.debitarTarifa();
         System.out.println("Saldo: " + minhaConta.getSaldo());
 
 
-        ContaEspecial novaConta = new ContaEspecial(new Pessoa(1,"Isadora Menin","CPF"),null,1234,36548,0, 1500);
+        ContaEspecial novaConta = new ContaEspecial(new Pessoa(1,"Isadora Menin","CPF"),null,1234,36548,BigDecimal.ZERO, new BigDecimal("1500"));
 
         System.out.println("Titular: " + novaConta.getTitular().getNome());
         System.out.println("Saldo: " + novaConta.getSaldo());
-        novaConta.depositar(350);
+        novaConta.depositar(new BigDecimal("350"));
         System.out.println("Saldo: " + novaConta.getSaldo());
         try {
-            novaConta.sacar(1000,35);
+            novaConta.sacar(new BigDecimal("1000"),new BigDecimal("35"));
         } catch (SaldoInsuficienteException e) {
             System.out.println("# Erro na operação: " + e.getMessage());
         }
@@ -49,7 +53,7 @@ public class Principal {
         }
         System.out.println();
 
-        Boleto boletoEscola = new Boleto(new Pessoa(1,"Isadora Menin","CPF"),200);
+        Boleto boletoEscola = new Boleto(new Pessoa(1,"Isadora Menin","CPF"),new BigDecimal("200"));
         try {
             caixaEletronico.pagar(boletoEscola,minhaConta);
             boletoEscola.imprimirRecibo();
@@ -66,10 +70,10 @@ public class Principal {
 
         System.out.println();
 
-        Holerite holeriteFuncionario = new Holerite(new Pessoa(1,"Isadora Menin","CPF"),35,280);
+        Holerite holeriteFuncionario = new Holerite(new Pessoa(1,"Isadora Menin","CPF"),new BigDecimal("35"),280);
         try {
             caixaEletronico.pagar(holeriteFuncionario,minhaConta);
-            System.out.println("Esta pago:" + holeriteFuncionario.estaPago() + " Valor: " + +holeriteFuncionario.getValorTotal());
+            System.out.println("Esta pago:" + holeriteFuncionario.estaPago() + " Valor: " + holeriteFuncionario.getValorTotal().toString());
         } catch (SaldoInsuficienteException | DocumentoExceptions e) {
             System.out.println("# Erro na operação: " + e.getMessage());
         }
