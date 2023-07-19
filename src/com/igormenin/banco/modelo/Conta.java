@@ -1,5 +1,8 @@
 package com.igormenin.banco.modelo;
 
+import com.igormenin.banco.modelo.exceptions.SaldoInsuficienteException;
+import com.igormenin.banco.modelo.exceptions.ValorNegativoException;
+
 import java.util.Objects;
 
 public abstract class Conta {
@@ -23,19 +26,19 @@ public abstract class Conta {
 
     public void depositar(double valor){
         if ( valor <= 0) {
-            throw new IllegalArgumentException("Valor deve ser positivo!");
+            throw new ValorNegativoException("Valor deve ser positivo!");
         }
         saldo += valor;
     }
 
     public void sacar(double valor) {
         if ( valor <= 0) {
-            throw new IllegalArgumentException("Valor deve ser positivo!");
+            throw new ValorNegativoException("Valor deve ser positivo!");
         }
         if ( getSaldoDisponivel() >= valor ) {
             saldo -= valor;
         } else {
-            throw new IllegalStateException("Saldo insuficiente!");
+            throw new SaldoInsuficienteException("Saldo insuficiente!");
         }
 
     }

@@ -6,5 +6,10 @@ public interface DocumentoPagavel {
     boolean estaPago();
     boolean estaEstornado();
     void efetuarPagamento();
+    default void imprimirRecibo() {
+        System.out.println("Recibo");
+        System.out.println("Valor Total: " + getValorTotal());
+        System.out.println("Pago: " + estaPago());
+    }
 
 }

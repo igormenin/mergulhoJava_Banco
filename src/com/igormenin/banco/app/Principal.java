@@ -2,9 +2,13 @@ package com.igormenin.banco.app;
 
 import com.igormenin.banco.modelo.*;
 import com.igormenin.banco.modelo.atm.CaixaEletronico;
+import com.igormenin.banco.modelo.exceptions.DocumentoExceptions;
+import com.igormenin.banco.modelo.exceptions.SaldoInsuficienteException;
+import com.igormenin.banco.modelo.exceptions.ValorNegativoException;
 import com.igormenin.banco.modelo.pagamento.Boleto;
 import com.igormenin.banco.modelo.pagamento.DocumentoPagavel;
 import com.igormenin.banco.modelo.pagamento.Holerite;
+import com.sun.source.tree.TryTree;
 
 public class Principal {
 
@@ -32,33 +36,43 @@ public class Principal {
         System.out.println("Saldo: " + novaConta.getSaldo());
         novaConta.depositar(350);
         System.out.println("Saldo: " + novaConta.getSaldo());
-        novaConta.sacar(1000,35);
-        System.out.println("Saldo: " + novaConta.getSaldo());
-        novaConta.debitarTarifa();
-        System.out.println("Saldo: " + novaConta.getSaldo());
-
+        try {
+            novaConta.sacar(1000,35);
+        } catch (SaldoInsuficienteException e) {
+            System.out.println("# Erro na operação: " + e.getMessage());
+        }
+        try {
+            novaConta.debitarTarifa();
+            System.out.println("Saldo: " + novaConta.getSaldo());
+        } catch (SaldoInsuficienteException | ValorNegativoException e) {
+            System.out.println("# Erro na operação: " + e.getMessage());
+        }
         System.out.println();
 
         Boleto boletoEscola = new Boleto(new Pessoa(1,"Isadora Menin","CPF"),200);
-        System.out.println("Boleto pago: " + boletoEscola.estaPago());
-        caixaEletronico.pagar(boletoEscola,minhaConta);
-        System.out.println("Boleto pago: " + boletoEscola.estaPago() + " Valor: " + boletoEscola.getValorTotal());
-        System.out.println("Saldo: " + minhaConta.getSaldo());
-        System.out.println("Boleto Estornado: " + boletoEscola.estaEstornado());
-        System.out.println("######################");
-        System.out.println("# Estornando boleto! #");
-        System.out.println("######################");
-        caixaEletronico.estornar(boletoEscola, minhaConta);
-        System.out.println("Boleto Estornado: " + boletoEscola.estaEstornado());
-        System.out.println("Saldo: " + minhaConta.getSaldo());
+        try {
+            caixaEletronico.pagar(boletoEscola,minhaConta);
+            boletoEscola.imprimirRecibo();
+        } catch (SaldoInsuficienteException | DocumentoExceptions e) {
+            System.out.println("# Erro na operação: " + e.getMessage());
+        }
+        try {
+            caixaEletronico.estornar(boletoEscola, minhaConta);
+            System.out.println("Boleto Estornado: " + boletoEscola.estaEstornado());
+            System.out.println("Saldo: " + minhaConta.getSaldo());
+        } catch (SaldoInsuficienteException | DocumentoExceptions e) {
+            System.out.println("# Erro na operação: " + e.getMessage());
+        }
 
         System.out.println();
 
         Holerite holeriteFuncionario = new Holerite(new Pessoa(1,"Isadora Menin","CPF"),35,280);
-        System.out.println("Esta pago:" + holeriteFuncionario.estaPago());
-        caixaEletronico.pagar(holeriteFuncionario,minhaConta);
-        System.out.println("Esta pago:" + holeriteFuncionario.estaPago() + " Valor: " + +holeriteFuncionario.getValorTotal());
-
+        try {
+            caixaEletronico.pagar(holeriteFuncionario,minhaConta);
+            System.out.println("Esta pago:" + holeriteFuncionario.estaPago() + " Valor: " + +holeriteFuncionario.getValorTotal());
+        } catch (SaldoInsuficienteException | DocumentoExceptions e) {
+            System.out.println("# Erro na operação: " + e.getMessage());
+        }
 
 
         System.out.println();

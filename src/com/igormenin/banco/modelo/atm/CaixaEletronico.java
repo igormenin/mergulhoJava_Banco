@@ -1,6 +1,7 @@
 package com.igormenin.banco.modelo.atm;
 
 import com.igormenin.banco.modelo.Conta;
+import com.igormenin.banco.modelo.exceptions.DocumentoExceptions;
 import com.igormenin.banco.modelo.pagamento.DocumentoEstornavel;
 import com.igormenin.banco.modelo.pagamento.DocumentoPagavel;
 
@@ -15,7 +16,7 @@ public class CaixaEletronico {
 
     public void pagar(DocumentoPagavel documento, Conta conta) {
         if (documento.estaPago()){
-            throw new IllegalArgumentException("Documento já está pago!");
+            throw new DocumentoExceptions("Documento já está pago!");
         }
         conta.sacar(documento.getValorTotal());
         documento.efetuarPagamento();
@@ -23,9 +24,9 @@ public class CaixaEletronico {
 
     public void estornar(DocumentoEstornavel documento, Conta conta) {
         if (!documento.estaPago()) {
-            throw new IllegalArgumentException("Documento não está pago!");
+            throw new DocumentoExceptions("Documento não está pago!");
         } else if (documento.estaEstornado()) {
-            throw new IllegalArgumentException("Documento já estornado!");
+            throw new DocumentoExceptions("Documento já estornado!");
         }
         conta.depositar(documento.getValorTotal());
         documento.estornarPagamento();
