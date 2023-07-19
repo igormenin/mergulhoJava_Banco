@@ -6,6 +6,13 @@ public class ContaInvestimento extends Conta {
         super(titular, coTitular, agencia, numero,0D);
     }
 
+    @Override
+    public void debitarTarifa() {
+        if (getSaldo() < 10_000){
+            sacar(25);
+        }
+    }
+
     public void creditarRendimentos(double percentualJuros) {
         double valorSaldo = getSaldo();
         double vlrRendimento = (valorSaldo * percentualJuros)/100;

@@ -18,6 +18,9 @@ public class Principal {
         System.out.println("Saldo: " + minhaConta.getSaldo());
         minhaConta.creditarRendimentos(0.8);
         System.out.println("Saldo: " + minhaConta.getSaldo());
+        minhaConta.debitarTarifa();
+        System.out.println("Saldo: " + minhaConta.getSaldo());
+
 
         ContaEspecial novaConta = new ContaEspecial(new Pessoa(1,"Isadora Menin","CPF"),null,1234,36548,0, 1500);
 
@@ -26,6 +29,8 @@ public class Principal {
         novaConta.depositar(350);
         System.out.println("Saldo: " + novaConta.getSaldo());
         novaConta.sacar(1000,35);
+        System.out.println("Saldo: " + novaConta.getSaldo());
+        novaConta.debitarTarifa();
         System.out.println("Saldo: " + novaConta.getSaldo());
 
         System.out.println();

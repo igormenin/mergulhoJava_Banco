@@ -2,7 +2,7 @@ package com.igormenin.banco.modelo;
 
 import java.util.Objects;
 
-public class Conta {
+public abstract class Conta {
     private Pessoa titular;
     private Pessoa coTitular;
     private int agencia;
@@ -43,6 +43,8 @@ public class Conta {
     public void sacar(double valor, double taxaSaque){
         sacar(valor + taxaSaque);
     }
+
+    public abstract void debitarTarifa();
 
     public Pessoa getTitular() {
         return titular;
