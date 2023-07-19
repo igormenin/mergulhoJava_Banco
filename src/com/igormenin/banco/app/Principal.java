@@ -1,13 +1,13 @@
 package com.igormenin.banco.app;
 
-import com.igormenin.banco.modelo.Conta;
-import com.igormenin.banco.modelo.ContaEspecial;
-import com.igormenin.banco.modelo.ContaInvestimento;
-import com.igormenin.banco.modelo.Pessoa;
+import com.igormenin.banco.modelo.*;
 
 public class Principal {
 
     public static void main(String[] args) {
+
+        CaixaEletronico caixaEletronico = new CaixaEletronico();
+
         ContaInvestimento minhaConta = new ContaInvestimento(new Pessoa(1,"Igor Cassiano Menin","RG"),null,1748,34488,0);
 
         System.out.println("Titular: " + minhaConta.getTitular().getNome());
@@ -27,5 +27,12 @@ public class Principal {
         System.out.println("Saldo: " + novaConta.getSaldo());
         novaConta.sacar(1000,35);
         System.out.println("Saldo: " + novaConta.getSaldo());
+
+        System.out.println();
+
+        caixaEletronico.imprimirSaldo(minhaConta);
+        System.out.println();
+        caixaEletronico.imprimirSaldo(novaConta);
+
     }
 }
