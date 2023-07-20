@@ -29,9 +29,9 @@ public abstract class Conta {
         if ( valor.compareTo(BigDecimal.ZERO) <= 0) {
             throw new ValorNegativoException("Valor deve ser positivo!");
         }
-        System.out.println("Depositar Saldo: " + saldo);
+//        System.out.println("Depositar Saldo: " + saldo);
         saldo = saldo.add(valor);
-        System.out.println("Apos Depositar Saldo: " + saldo);
+//        System.out.println("Apos Depositar Saldo: " + saldo);
     }
 
     public void sacar(BigDecimal valor) {
