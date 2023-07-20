@@ -58,4 +58,27 @@ public class Pessoa {
     public void setUltimaAtualizacao() {
         this.ultimaAtualizacao = LocalDateTime.now();
     }
+
+    @Override
+    public String toString() {
+        return "Pessoa{" +
+                "nome='" + nome + '\'' +
+                ", documento='" + documento + '\'' +
+                ", tipo=" + tipo +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null) return false;
+        if (getClass() != o.getClass()) return false;
+
+        Pessoa pessoa = (Pessoa) o;
+
+        if (!getNome().equals(pessoa.getNome())) return false;
+        if (!getDocumento().equals(pessoa.getDocumento())) return false;
+        return getTipo() == pessoa.getTipo();
+    }
+
 }
