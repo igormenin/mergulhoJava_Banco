@@ -1,6 +1,7 @@
 package com.igormenin.banco.modelo;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class Pessoa {
     private int id;
@@ -68,17 +69,30 @@ public class Pessoa {
                 '}';
     }
 
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (o == null) return false;
+//        if (getClass() != o.getClass()) return false;
+//
+//        Pessoa pessoa = (Pessoa) o;
+//
+//        if (!getNome().equals(pessoa.getNome())) return false;
+//        if (!getDocumento().equals(pessoa.getDocumento())) return false;
+//        return getTipo() == pessoa.getTipo();
+//    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null) return false;
-        if (getClass() != o.getClass()) return false;
-
+        if (o == null || getClass() != o.getClass()) return false;
         Pessoa pessoa = (Pessoa) o;
-
-        if (!getNome().equals(pessoa.getNome())) return false;
-        if (!getDocumento().equals(pessoa.getDocumento())) return false;
-        return getTipo() == pessoa.getTipo();
+        return Objects.equals(documento, pessoa.documento);
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(documento);
+    }
 }
