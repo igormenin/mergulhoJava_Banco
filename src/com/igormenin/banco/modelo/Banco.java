@@ -3,6 +3,7 @@ package com.igormenin.banco.modelo;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class Banco {
 
@@ -31,4 +32,14 @@ public class Banco {
     public List<Conta> getContas() {
         return contas;
     }
+
+    public Optional<Conta> buscar(int agencia, int numConta) {
+        for (Conta conta : getContas()) {
+            if (conta.getAgencia() == agencia && conta.getNumero() == numConta) {
+                return Optional.of(conta);
+            }
+        }
+        return Optional.empty();
+    }
+
 }
